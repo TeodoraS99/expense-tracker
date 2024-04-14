@@ -1,18 +1,18 @@
-.example-headers-align .mat-expansion-panel-header-description {
+.headers-align .mat-expansion-panel-header-description {
     justify-content: space-between;
     align-items: center;
 }
 
-.example-headers-align .mat-mdc-form-field+.mat-mdc-form-field {
+.headers-align .mat-mdc-form-field+.mat-mdc-form-field {
     margin-left: 0;
 }
 
-.example-form {
+.form {
     display: inline-flex;
     flex-direction: column;
     align-items: flex-start;
     margin: 20px auto;
-    width: 300px;
+    width: 245px;
     padding: 16px;
     border: 1px solid #ddd;
     border-radius: 4px;
@@ -34,4 +34,20 @@ mat-accordion {
 
 mat-tab-group {
     overflow: hidden !important;
+}
+
+.control-buttons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 15px;
+}
+
+.multi-button {
+    margin: 10px;
+}
+
+.expand-collapse-buttons {
+    display: flex;
+    justify-content: flex-end !important;
 }

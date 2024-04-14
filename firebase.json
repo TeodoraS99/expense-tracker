@@ -1,0 +1,9 @@
+{
+  "hosting": [
+    {
+      "target": "expense-tracker",
+      "source": ".",
+      "frameworksBackend": {}
+    }
+  ]
+}

@@ -14,8 +14,6 @@ export class ExpenseListComponent {
   displayMode: string = 'default';
   multi = false;
   hideToggle = false;
-  disabled = false;
-
 
   constructor() { }
 
@@ -28,8 +26,9 @@ export class ExpenseListComponent {
   editCategory(index: number) {
   }
 
-  onSubmit(index: number) {
+  onSubmit(index: number, panel: any) {
     console.log('Submitted expense for category:', this.categories[index]);
+    panel.close();
   }
 
   deleteCategory(event: any, index: number) {

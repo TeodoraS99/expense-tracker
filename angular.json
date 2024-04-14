@@ -101,6 +101,23 @@
             ],
             "scripts": []
           }
+        },
+        "deploy": {
+          "builder": "@angular/fire:deploy",
+          "options": {
+            "version": 2
+          },
+          "configurations": {
+            "production": {
+              "buildTarget": "expense-tracker:build:production",
+              "serveTarget": "expense-tracker:serve:production"
+            },
+            "development": {
+              "buildTarget": "expense-tracker:build:development",
+              "serveTarget": "expense-tracker:serve:development"
+            }
+          },
+          "defaultConfiguration": "production"
         }
       }
     }

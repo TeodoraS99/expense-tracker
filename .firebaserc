@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "expense-tracker-a8202": {
+      "hosting": {
+        "expense-tracker": [
+          "expense-tracker-a8202"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "expense-tracker-a8202"
+  }
+}
