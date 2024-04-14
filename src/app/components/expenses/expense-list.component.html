@@ -1,1 +1,34 @@
-<p>expense list!</p>
+<mat-accordion class="example-headers-align" [multi]="true">
+  <div class="accordion-container"> <mat-expansion-panel *ngFor="let category of categories; let i = index">
+      <mat-expansion-panel-header>
+        <mat-panel-title>{{ category.name }}</mat-panel-title>
+        <mat-panel-description>
+          {{category.amount}}
+          <mat-icon (click)="deleteCategory($event, i)">delete</mat-icon>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+
+      <form class="example-form" (ngSubmit)="onSubmit(i)">
+        <div class="form-container"> <mat-form-field appearance="fill" class="example-full-width">
+            <mat-label>Category</mat-label>
+            <input matInput type="text" [(ngModel)]="category.name" name="categoryName{{i}}">
+          </mat-form-field>
+
+          <mat-form-field appearance="fill" class="example-full-width">
+            <mat-label>Amount</mat-label>
+            <input matInput type="number" [(ngModel)]="category.name" name="categoryAmount{{i}}">
+          </mat-form-field>
+
+          <button mat-raised-button color="primary" type="submit">Save</button>
+        </div>
+      </form>
+    </mat-expansion-panel>
+  </div>
+
+  <div>
+    <button mat-raised-button color="primary" (click)="addCategory()">Add Category</button>
+    <mat-slide-toggle [(ngModel)]="multi">Allow Multi Expansion</mat-slide-toggle>
+    <button mat-button (click)="accordion.openAll()" [disabled]="!multi">Expand All</button>
+    <button mat-button (click)="accordion.closeAll()" [disabled]="!multi">Collapse All</button>
+  </div>
+</mat-accordion>

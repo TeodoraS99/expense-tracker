@@ -1,10 +1,41 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
+import { MatAccordion } from '@angular/material/expansion';
 
 @Component({
   selector: 'app-expense-list',
   templateUrl: './expense-list.component.html',
-  styleUrl: './expense-list.component.css'
+  styleUrls: ['./expense-list.component.css']
 })
 export class ExpenseListComponent {
+  categories: { name: string, amount: number }[] = [];
 
+  @ViewChild(MatAccordion)
+  accordion!: MatAccordion;
+  displayMode: string = 'default';
+  multi = false;
+  hideToggle = false;
+  disabled = false;
+
+
+  constructor() { }
+
+  ngOnInit() { }
+
+  addCategory() {
+    this.categories.push({ name: 'Mancare', amount: 200 });
+  }
+
+  editCategory(index: number) {
+  }
+
+  onSubmit(index: number) {
+    console.log('Submitted expense for category:', this.categories[index]);
+  }
+
+  deleteCategory(event: any, index: number) {
+    event.stopPropagation();
+    if (index > -1) {
+      this.categories.splice(index, 1);
+    }
+  }
 }
