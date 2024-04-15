@@ -5,3 +5,8 @@
 .tab-container {
     padding: 1vh;
 }
+
+
+.mat-elevation-z2 {
+    background-color: #F4F1EE;
+}

@@ -12,12 +12,16 @@ import { BrowserModule } from '@angular/platform-browser';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { ExpenseListComponent } from './components/expenses/expense-list.component';
 import { HeaderComponent } from './components/header/header.component';
 import { SummaryComponent } from './components/summary/summary.component';
 import { MatTableModule } from '@angular/material/table';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { provideFirestore, getFirestore } from '@angular/fire/firestore';
+import { AngularFireModule } from '@angular/fire/compat';
+import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
+import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 
 
 //https://www.youtube.com/watch?v=0ihoworuX4o&ab_channel=MonsterlessonsAcademy
@@ -31,8 +35,6 @@ const firebaseConfig = {
   measurementId: "G-F5X2NPNRHP"
 };
 
-const app = initializeApp(firebaseConfig);
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -41,6 +43,9 @@ const app = initializeApp(firebaseConfig);
     SummaryComponent
   ],
   imports: [
+    AngularFireModule.initializeApp(firebaseConfig), // Initialize Firebase with config
+    AngularFirestoreModule, // Import Firestore module
+    AngularFireAuthModule, // Import Auth module
     BrowserModule,
     FormsModule,
     AppRoutingModule,
@@ -53,7 +58,8 @@ const app = initializeApp(firebaseConfig);
     MatExpansionModule,
     MatCheckboxModule,
     MatSlideToggleModule,
-    MatTableModule
+    MatTableModule,
+    MatDatepickerModule
   ],
   providers: [
     provideAnimationsAsync(),
