@@ -1,46 +1,93 @@
-import { Component, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Component } from '@angular/core';
+import {
+  ColDef,
+  GridReadyEvent,
+  RowGroupingDisplayType
+} from 'ag-grid-community';
+import 'ag-grid-enterprise';
+import { GridApi } from 'ag-grid-enterprise';
+import { IOlympicData } from './interfaces';
+
 
 @Component({
   selector: 'app-summary',
   templateUrl: './summary.component.html',
-  styleUrls: ['./summary.component.css']
+  styleUrls: ['./summary.component.css'],
 })
-export class SummaryComponent implements OnInit {
-  inputColumns = ['Luni', 'Marti', 'Miercuri', 'Joi', 'Vineri', 'Sambata', 'Duminica'] as const;
-  inputData = ELEMENT_DATA;
 
-  displayColumns: string[] = [];
-  displayData: any[] = [];
-  showTable: boolean = false;
+export class SummaryComponent {
+  private gridApi!: GridApi<IOlympicData>;
+  public columnDefs: ColDef[] = [
+    { field: "country", rowGroup: true, hide: true, sortable: true },
+    { field: "year", rowGroup: true, hide: true, sortable: true },
+    { field: "athlete", minWidth: 250 },
+    { field: "sport", minWidth: 200 },
+    { field: "gold" },
+    { field: "silver" },
+    { field: "bronze" },
+  ];
+  public defaultColDef: ColDef = {
+    flex: 1,
+    minWidth: 100,
+    sortable: false,
+  };
+  public groupDisplayType: RowGroupingDisplayType = "groupRows";
+  public rowGroupPanelShow: "always" | "onlyWhenGrouping" | "never" = "always";
+  public groupDefaultExpanded = 1;
+  public rowData!: IOlympicData[];
+  public themeClass: string = "ag-theme-quartz";
 
-  ngOnInit() {
-    this.displayColumns = ['0'].concat(this.inputData.map(x => x.position.toString()));
-    this.displayData = this.inputColumns.map(x => this.formatInputRow(x as keyof PeriodicElement));
+  constructor(private http: HttpClient) { }
+  ngOnInit() { }
 
-    console.log(this.displayColumns);
-    console.log(this.displayData);
+  onGridReady(params: GridReadyEvent<IOlympicData>) {
+    this.http
+      .get<
+        IOlympicData[]
+      >("https://www.ag-grid.com/example-assets/olympic-winners.json")
+      .subscribe((data) => {
+        this.rowData = data;
+      });
+    // this.gridApi = params.api;
 
-    this.showTable = true;
-  }
-
-  formatInputRow(row: keyof PeriodicElement): Record<string | number, any> {
-    const output: Record<string | number, any> = {};
-
-    output[0] = row;
-    for (let i = 0; i < this.inputData.length; ++i) {
-      output[this.inputData[i].position] = this.inputData[i][row];
-    }
-    return output;
+    // this.rowData = [
+    //   {
+    //     "athlete": "Michael Phelps",
+    //     "age": 23,
+    //     "country": "United States",
+    //     "year": 2008,
+    //     "date": "24/08/2008",
+    //     "sport": "Swimming",
+    //     "gold": 8,
+    //     "silver": 0,
+    //     "bronze": 0,
+    //     "total": 8
+    //   },
+    //   {
+    //     "athlete": "Michael Phelps",
+    //     "age": 19,
+    //     "country": "United States",
+    //     "year": 2004,
+    //     "date": "29/08/2004",
+    //     "sport": "Swimming",
+    //     "gold": 6,
+    //     "silver": 0,
+    //     "bronze": 2,
+    //     "total": 8
+    //   },
+    //   {
+    //     "athlete": "Michael Phelps",
+    //     "age": 27,
+    //     "country": "United States",
+    //     "year": 2012,
+    //     "date": "12/08/2012",
+    //     "sport": "Swimming",
+    //     "gold": 4,
+    //     "silver": 2,
+    //     "bronze": 0,
+    //     "total": 6
+    //   }
+    // ]
   }
 }
-
-export interface PeriodicElement {
-  category: string;
-  position: string;
-  amount: number;
-}
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  { position: 'Category', category: 'Hydrogen', amount: 1.0079 },
-  { position: 'Amount', category: 'Helium', amount: 4.0026 },
-];

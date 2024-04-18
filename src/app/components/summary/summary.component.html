@@ -1,11 +1,13 @@
-<table mat-table [dataSource]="displayData" class="mat-elevation-z8" *ngIf="showTable">
-    <!-- Column definitions -->
-    <ng-container *ngFor="let column of displayColumns" [matColumnDef]="column">
-        <th mat-header-cell *matHeaderCellDef> {{ column }} </th>
-        <td mat-cell *matCellDef="let element"> {{ element[column] }} </td>
-    </ng-container>
-
-    <!-- Row definition -->
-    <tr mat-header-row *matHeaderRowDef="displayColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayColumns;"></tr>
-</table>
+<div style="display: flex; flex-direction: column; height: 100%;">
+  <ag-grid-angular
+    class="ag-theme-quartz flex-grow-1"
+    style="width: 100%; height: 500px;"
+    [columnDefs]="columnDefs"
+    [defaultColDef]="defaultColDef"
+    [groupDisplayType]="groupDisplayType"
+    [groupDefaultExpanded]="groupDefaultExpanded"
+    [rowData]="rowData"
+    (gridReady)="onGridReady($event)"
+  >
+  </ag-grid-angular>
+</div>
