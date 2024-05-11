@@ -52,6 +52,8 @@
     "ag-grid-enterprise": "^31.2.1",
     "bootstrap": "^5.3.3",
     "firebase": "^10.11.0",
+    "ngx-perfect-scrollbar": "^10.1.1",
+    "perfect-scrollbar": "^1.5.5",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.14.3"

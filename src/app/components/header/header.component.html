@@ -1,17 +1,27 @@
-<div class="mat-elevation-z2">
-    <mat-tab-group [(selectedIndex)]="selectedTab" mat-stretch-tabs class="mat-elevation-z1">
-        <mat-tab *ngFor="let tab of tabs" [label]="tab">
+<div class="expense-container">
+    <mat-tab-group [(selectedIndex)]="selectedTab"
+                   mat-stretch-tabs
+                   class="mat-elevation-z1">
+        <mat-tab *ngFor="let tab of tabs"
+                 [label]="tab">
             <app-expense-list *ngIf="tab !== 'Summary'"></app-expense-list>
             <app-summary *ngIf="tab === 'Summary'"></app-summary>
         </mat-tab>
     </mat-tab-group>
 
-    <div class="button-container" style="display: flex; justify-content: space-between; ">
-        <button mat-stroked-button color="primary" (click)="back()" disabled [disabled]="selectedTab === 0">
+    <div class="button-container">
+        <button mat-stroked-button
+                color="primary"
+                (click)="back()"
+                disabled
+                [disabled]="selectedTab === 0">
             {{ tabs[(selectedTab - 1 + tabs.length) % tabs.length] }}
         </button>
-        <button mat-stroked-button color="primary" (click)="next()" disabled
-            [disabled]="selectedTab === tabs.length - 1">
+        <button mat-stroked-button
+                color="primary"
+                (click)="next()"
+                disabled
+                [disabled]="selectedTab === tabs.length - 1">
             {{ tabs[(selectedTab + 1) % tabs.length] }}
         </button>
     </div>

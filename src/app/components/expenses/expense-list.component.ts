@@ -1,8 +1,5 @@
-import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { MatAccordion } from '@angular/material/expansion';
-import { provideNativeDateAdapter } from '@angular/material/core';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatFormFieldModule } from '@angular/material/form-field';
 
 @Component({
   selector: 'app-expense-list',
@@ -10,7 +7,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
   styleUrls: ['./expense-list.component.css']
 })
 export class ExpenseListComponent {
-  categories: { name: string, amount: number, date: number }[] = [];
+  categories: { name: string, amount: number, title: string }[] = [];
 
   @ViewChild(MatAccordion)
   accordion!: MatAccordion;
@@ -23,7 +20,7 @@ export class ExpenseListComponent {
   ngOnInit() { }
 
   addCategory() {
-    this.categories.push({ name: 'Mancare', amount: 200, date: 2024 });
+    this.categories.push({ name: 'Mancare', amount: 200, title: 'Cartofi prajiti' });
   }
 
   editCategory(index: number) {

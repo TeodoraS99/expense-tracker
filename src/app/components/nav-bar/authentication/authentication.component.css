@@ -1,0 +1,10 @@
+.button-row {
+    display: flex;
+    justify-content: space-between;
+}
+
+.form-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+}

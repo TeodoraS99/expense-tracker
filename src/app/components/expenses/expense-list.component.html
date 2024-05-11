@@ -1,7 +1,10 @@
-<div style="margin: 2vh;">
-  <mat-accordion class="headers-align" [multi]="true">
+<div style="margin: 2vh;"
+     class="expense">
+  <mat-accordion class="headers-align"
+                 [multi]="true">
     <div class="accordion-container">
-      <mat-expansion-panel *ngFor="let category of categories; let i = index" #panel>
+      <mat-expansion-panel *ngFor="let category of categories; let i = index"
+                           #panel>
         <mat-expansion-panel-header>
           <mat-panel-title>{{ category.name }}</mat-panel-title>
           <mat-panel-description>
@@ -10,27 +13,39 @@
           </mat-panel-description>
         </mat-expansion-panel-header>
 
-        <form class="form" (ngSubmit)="onSubmit(i, panel)">
+        <form class="form"
+              (ngSubmit)="onSubmit(i, panel)">
           <div class="form-container">
-            <mat-form-field appearance="fill" class="form-field">
+            <mat-form-field appearance="fill"
+                            class="form-field">
+              <mat-label>Title</mat-label>
+              <input matInput
+                     type="text"
+                     [(ngModel)]="category.title"
+                     name="categoryTitle{{i}}">
+            </mat-form-field>
+
+            <mat-form-field appearance="fill"
+                            class="form-field">
               <mat-label>Category</mat-label>
-              <input matInput type="text" [(ngModel)]="category.name" name="categoryName{{i}}">
+              <input matInput
+                     type="text"
+                     [(ngModel)]="category.name"
+                     name="categoryName{{i}}">
             </mat-form-field>
 
-            <mat-form-field appearance="fill" class="form-field">
+            <mat-form-field appearance="fill"
+                            class="form-field">
               <mat-label>Amount</mat-label>
-              <input matInput type="number" [(ngModel)]="category.amount" name="categoryAmount{{i}}">
+              <input matInput
+                     type="number"
+                     [(ngModel)]="category.amount"
+                     name="categoryAmount{{i}}">
             </mat-form-field>
 
-            <!-- <mat-form-field>
-              <mat-label>Choose a date</mat-label>
-              <input matInput [matDatepicker]="picker">
-              <mat-hint>MM/DD/YYYY</mat-hint>
-              <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-              <mat-datepicker #picker></mat-datepicker>
-            </mat-form-field> -->
-
-            <button mat-raised-button color="primary" type="submit">Save</button>
+            <button mat-raised-button
+                    color="primary"
+                    type="submit">Save</button>
           </div>
         </form>
       </mat-expansion-panel>
@@ -38,12 +53,19 @@
 
     <div class=" control-buttons">
       <div>
-        <button mat-raised-button color="primary" (click)="addCategory()">Add Category</button>
-        <mat-slide-toggle class="multi-button" [(ngModel)]="multi">Allow Multi Expansion</mat-slide-toggle>
+        <button mat-raised-button
+                color="primary"
+                (click)="addCategory()">Add Category</button>
+        <mat-slide-toggle class="multi-button"
+                          [(ngModel)]="multi">Allow Multi Expansion</mat-slide-toggle>
       </div>
       <div class="expand-collapse-buttons">
-        <button mat-button (click)="accordion.openAll()" [disabled]="!multi">Expand All</button>
-        <button mat-button (click)="accordion.closeAll()" [disabled]="!multi">Collapse All</button>
+        <button mat-button
+                (click)="accordion.openAll()"
+                [disabled]="!multi">Expand All</button>
+        <button mat-button
+                (click)="accordion.closeAll()"
+                [disabled]="!multi">Collapse All</button>
       </div>
     </div>
 
