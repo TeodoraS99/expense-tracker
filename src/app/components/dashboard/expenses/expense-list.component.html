@@ -1,4 +1,4 @@
-<div style="margin: 2vh;"
+<div style="margin: 1.5rem;"
      class="expense">
   <mat-accordion class="headers-align"
                  [multi]="true">
@@ -43,9 +43,13 @@
                      name="categoryAmount{{i}}">
             </mat-form-field>
 
-            <button mat-raised-button
-                    color="primary"
-                    type="submit">Save</button>
+            <div class="button-row">
+              <button mat-raised-button
+                      color="primary"
+                      type="submit">Save</button>
+              <button mat-raised-button
+                      type="reset">Cancel</button>
+            </div>
           </div>
         </form>
       </mat-expansion-panel>
@@ -68,6 +72,10 @@
                 [disabled]="!multi">Collapse All</button>
       </div>
     </div>
-
   </mat-accordion>
+
+
+
+
+
 </div>

@@ -53,6 +53,11 @@ mat-tab-group {
 }
 
 .expense {
-    overflow: auto;
-    max-height: 100%;
+    /* overflow: auto; */
+    /* max-height: 100%; */
+}
+
+.button-row {
+    display: flex;
+    justify-content: space-between;
 }

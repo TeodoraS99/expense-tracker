@@ -4,10 +4,9 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-nav-bar',
   templateUrl: './nav-bar.component.html',
-  styleUrl: './nav-bar.component.css'
+  styleUrls: ['./nav-bar.component.css'] // corectat din styleUrl in styleUrls
 })
 export class NavBarComponent {
-
   constructor(private router: Router) { }
 
   onLoginClick() {
@@ -16,7 +15,6 @@ export class NavBarComponent {
 
   onLogoutClick() {
     this.router.navigate(['logout']);
-
   }
 
   ngOnInit() {

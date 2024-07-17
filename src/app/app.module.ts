@@ -26,22 +26,13 @@ import { MatCardModule } from '@angular/material/card';
 import { AppRoutingModule } from './app-routing.module';
 // App components
 import { AppComponent } from './app.component';
-import { ExpenseListComponent } from './components/expenses/expense-list.component';
-import { HeaderComponent } from './components/header/header.component';
-import { SummaryComponent } from './components/summary/summary.component';
+import { ExpenseListComponent } from './components/dashboard/expenses/expense-list.component';
+import { HeaderComponent } from './components/dashboard/header/header.component';
+import { SummaryComponent } from './components/dashboard/summary/summary.component';
 // AG Grid
 import { AgGridModule } from 'ag-grid-angular';
-import { NavBarComponent } from './components/nav-bar/nav-bar.component';
-// import "ag-grid-charts-enterprise";
-// import "ag-grid-community/styles/ag-grid.css";
-// import "ag-grid-community/styles/ag-theme-quartz.css";
-// import "ag-grid-enterprise";
-import {
-  PerfectScrollbarModule, PerfectScrollbarConfigInterface,
-  PERFECT_SCROLLBAR_CONFIG
-} from 'ngx-perfect-scrollbar';
-import { AuthenticationComponent } from './components/nav-bar/authentication/authentication.component';
-
+import { NavBarComponent } from './components/dashboard/nav-bar/nav-bar.component';
+import { AuthenticationComponent } from './components/authentication/authentication.component';
 
 
 const firebaseConfig = {
@@ -53,14 +44,6 @@ const firebaseConfig = {
   appId: "1:606801431268:web:500db7f0a639b244a43af1",
   measurementId: "G-F5X2NPNRHP"
 };
-
-const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
-  wheelPropagation: true
-};
-
-// const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
-//   suppressScrollX: true
-// };
 
 @NgModule({
   declarations: [
@@ -101,9 +84,6 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     // AG Grid
     AgGridModule,
 
-
-
-
   ],
   providers: [
     provideAnimationsAsync(),
@@ -111,10 +91,6 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
       provideFirebaseApp(() => initializeApp(firebaseConfig)),
       provideFirestore(() => getFirestore()),
     ]),
-    {
-      provide: PERFECT_SCROLLBAR_CONFIG,
-      useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG
-    }
   ],
   bootstrap: [AppComponent]
 })

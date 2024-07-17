@@ -4,23 +4,11 @@
 /* Quartz Theme Specific CSS */
 @import 'ag-grid-community/styles/ag-theme-quartz.css';
 
-html,
-body {
-    height: 100%;
-}
 
+html,
 body {
     margin: 0;
     font-family: Roboto, "Helvetica Neue", sans-serif;
     background-color: #F5F5F5;
-}
-
-html,
-body {
     height: 100%;
-}
-
-body {
-    margin: 0;
-    font-family: Roboto, "Helvetica Neue", sans-serif;
 }

@@ -1,15 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-authentication',
   templateUrl: './authentication.component.html',
-  styleUrl: './authentication.component.css'
+  styleUrls: ['./authentication.component.css']
 })
 export class AuthenticationComponent implements OnInit {
   formGroup: FormGroup;
 
-  constructor() {
+  constructor(private location: Location) {
     this.formGroup = new FormGroup({
       firstName: new FormControl('', [Validators.required]),
       lastName: new FormControl('', [Validators.required]),
@@ -23,6 +24,7 @@ export class AuthenticationComponent implements OnInit {
 
   onCancel(): void {
     this.formGroup.reset();
+    this.location.back();
   }
 
   onSubmit(): void {

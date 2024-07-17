@@ -1,5 +1,5 @@
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
-import { SummaryComponent } from './app/components/summary/summary.component';
+import { SummaryComponent } from './app/components/dashboard/summary/summary.component';
 import { AppModule } from './app/app.module';
 import '@angular/compiler';
 import { enableProdMode } from '@angular/core';
