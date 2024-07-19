@@ -22,6 +22,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatCardModule } from '@angular/material/card';
+import { MatListModule } from '@angular/material/list';
 // App routing
 import { AppRoutingModule } from './app-routing.module';
 // App components
@@ -33,6 +34,8 @@ import { SummaryComponent } from './components/dashboard/summary/summary.compone
 import { AgGridModule } from 'ag-grid-angular';
 import { NavBarComponent } from './components/dashboard/nav-bar/nav-bar.component';
 import { AuthenticationComponent } from './components/authentication/authentication.component';
+import { CategoryComponent } from './components/dashboard/category/category.component';
+import { MatSelectModule } from '@angular/material/select';
 
 
 const firebaseConfig = {
@@ -52,7 +55,8 @@ const firebaseConfig = {
     ExpenseListComponent,
     SummaryComponent,
     NavBarComponent,
-    AuthenticationComponent
+    AuthenticationComponent,
+    CategoryComponent
   ],
   imports: [
     BrowserModule,
@@ -80,6 +84,8 @@ const firebaseConfig = {
     MatMenuModule,
     MatIconModule,
     MatCardModule,
+    MatListModule,
+    MatSelectModule,
 
     // AG Grid
     AgGridModule,

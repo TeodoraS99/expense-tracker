@@ -17,6 +17,12 @@ export class NavBarComponent {
     this.router.navigate(['logout']);
   }
 
+  addCategory() {
+    this.router.navigate(['category']);
+  }
+
+
+
   ngOnInit() {
     window.addEventListener('popstate', () => {
       if (window.location.pathname === '/login') {

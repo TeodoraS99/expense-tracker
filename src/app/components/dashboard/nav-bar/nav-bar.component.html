@@ -1,6 +1,5 @@
 <mat-toolbar>
-    <span>Expense Tracker</span>
-    <span class="example-spacer"></span>
+    <span routerLink="/dashboard" style="cursor: pointer; flex: 1 1 auto">Expense Tracker</span>
     <button mat-icon-button
             [matMenuTriggerFor]="menu"
             aria-label="User Menu">
@@ -17,6 +16,12 @@
             <mat-icon>logout</mat-icon>
             <span>Logout</span>
         </button>
+        <button mat-menu-item
+                (click)="addCategory()">
+            <mat-icon>category</mat-icon>
+            <span>Add category</span>
+        </button>
+
     </mat-menu>
 </mat-toolbar>
 

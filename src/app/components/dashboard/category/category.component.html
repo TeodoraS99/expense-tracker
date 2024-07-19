@@ -1,0 +1,31 @@
+<mat-card style="max-width: 80%; margin: 0 auto; margin-top: 1%;">
+    <mat-card-header>
+        <mat-card-title style="padding-left: 10px;">Category</mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content style="padding: 24px 24px 0;">
+        <mat-form-field appearance="outline">
+            <mat-label>Insert a category</mat-label>
+            <input matInput
+                   type="text"
+                   [(ngModel)]="newCategory"
+                   placeholder="Write a category">
+        </mat-form-field>
+        <button mat-button
+                (click)="addCategory()"
+                style="padding-left: 24px;">Add Category</button>
+    </mat-card-content>
+
+    <div style="padding: 0 24px 24px 24px;">
+        <mat-selection-list
+                            style="padding: 0; border-radius: 8px; overflow: hidden; border: 1px solid #ccc; max-height: 60vh; overflow-y: auto;">
+            <mat-list-item *ngFor="let category of categories; let i = index"
+                           style="padding: 12px;">
+                <div style="display: flex; align-items: center; justify-content: space-between; width: 99%;">
+                    {{category}}
+                    <mat-icon (click)="deleteCategory($event, category)">delete</mat-icon>
+                </div>
+            </mat-list-item>
+        </mat-selection-list>
+    </div>
+</mat-card>

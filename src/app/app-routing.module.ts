@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AuthenticationComponent } from './components/authentication/authentication.component';
 import { HeaderComponent } from './components/dashboard/header/header.component';
 import { NavBarComponent } from './components/dashboard/nav-bar/nav-bar.component';
+import { CategoryComponent } from './components/dashboard/category/category.component';
 
 const routes: Routes = [
   {
@@ -12,8 +13,9 @@ const routes: Routes = [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
       { path: 'dashboard', component: HeaderComponent },
       { path: 'login', component: AuthenticationComponent },
-      // Alte rute pentru alte pagini
-      { path: '**', redirectTo: '/dashboard' } // redirecționează toate căile necunoscute către dashboard
+      { path: 'category', component: CategoryComponent },
+
+      { path: '**', redirectTo: '/dashboard' }
     ]
   }
 ];

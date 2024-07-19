@@ -1,13 +1,15 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatAccordion } from '@angular/material/expansion';
+import { CategoryService } from '../../service/category.service';
 
 @Component({
   selector: 'app-expense-list',
   templateUrl: './expense-list.component.html',
   styleUrls: ['./expense-list.component.css']
 })
-export class ExpenseListComponent {
-  categories: { name: string, amount: number, title: string }[] = [];
+export class ExpenseListComponent implements OnInit {
+  expenses: { name: string, amount: number, title: string }[] = [];
+  categories: string[] = [];
 
   @ViewChild(MatAccordion)
   accordion!: MatAccordion;
@@ -15,26 +17,28 @@ export class ExpenseListComponent {
   multi = false;
   hideToggle = false;
 
-  constructor() { }
+  constructor(private categoryService: CategoryService) { }
 
-  ngOnInit() { }
-
-  addCategory() {
-    this.categories.push({ name: 'Mancare', amount: 200, title: 'Cartofi prajiti' });
+  ngOnInit() {
+    this.categories = this.categoryService.getCategories();
   }
 
-  editCategory(index: number) {
+  addExpense() {
+    this.expenses.push({ name: 'Mancare', amount: 200, title: 'Cartofi prajiti' });
+  }
+
+  editExpense(index: number) {
   }
 
   onSubmit(index: number, panel: any) {
-    console.log('Submitted expense for category:', this.categories[index]);
+    console.log('Submitted expense for expense:', this.expenses[index]);
     panel.close();
   }
 
-  deleteCategory(event: any, index: number) {
+  deleteExpense(event: any, index: number) {
     event.stopPropagation();
     if (index > -1) {
-      this.categories.splice(index, 1);
+      this.expenses.splice(index, 1);
     }
   }
 }
