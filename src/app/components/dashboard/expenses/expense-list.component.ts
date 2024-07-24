@@ -1,6 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatAccordion } from '@angular/material/expansion';
 import { CategoryService } from '../../service/category.service';
+import { ExpenseService } from '../../service/expense.service';
+import { ExpenseInterface } from '../interfaces/expense.interface';
 
 @Component({
   selector: 'app-expense-list',
@@ -8,7 +10,7 @@ import { CategoryService } from '../../service/category.service';
   styleUrls: ['./expense-list.component.css']
 })
 export class ExpenseListComponent implements OnInit {
-  expenses: { name: string, amount: number, title: string }[] = [];
+  expenses: ExpenseInterface[] = [];
   categories: string[] = [];
 
   @ViewChild(MatAccordion)
@@ -17,14 +19,18 @@ export class ExpenseListComponent implements OnInit {
   multi = false;
   hideToggle = false;
 
-  constructor(private categoryService: CategoryService) { }
+  constructor(private categoryService: CategoryService,
+    private expenseService: ExpenseService,
+  ) { }
 
   ngOnInit() {
     this.categories = this.categoryService.getCategories();
+    this.expenses = this.expenseService.getExpenses();
   }
 
   addExpense() {
-    this.expenses.push({ name: 'Mancare', amount: 200, title: 'Cartofi prajiti' });
+    let emptyExpense: ExpenseInterface = { title: '', category: '', amount: 0 };
+    this.expenses.push(emptyExpense);
   }
 
   editExpense(index: number) {
@@ -32,13 +38,12 @@ export class ExpenseListComponent implements OnInit {
 
   onSubmit(index: number, panel: any) {
     console.log('Submitted expense for expense:', this.expenses[index]);
+    this.expenseService.addExpense(this.expenses, this.expenses[index]);
     panel.close();
   }
 
-  deleteExpense(event: any, index: number) {
-    event.stopPropagation();
-    if (index > -1) {
-      this.expenses.splice(index, 1);
-    }
+  deleteExpense(index: number) {
+    this.expenseService.deleteExpense(this.expenses, this.expenses[index]);
+    this.expenses = this.expenseService.getExpenses();
   }
 }

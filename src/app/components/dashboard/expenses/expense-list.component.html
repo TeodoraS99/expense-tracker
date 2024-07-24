@@ -1,40 +1,67 @@
-<div style="margin: 1.5rem;" class="expense">
-  <mat-accordion class="headers-align" [multi]="true">
+<div style="margin: 1.5rem;"
+     class="expense">
+  <mat-accordion class="headers-align"
+                 [multi]="true">
     <div class="accordion-container">
-      <mat-expansion-panel *ngFor="let expense of expenses; let i = index" #panel
+      <mat-expansion-panel *ngFor="let expense of expenses; let i = index"
+                           #panel
                            class="expansion-panel">
         <mat-expansion-panel-header class="panel-header">
-          <mat-panel-title>{{ expense.title }}</mat-panel-title>
+          <mat-panel-title>{{ expense.title}}</mat-panel-title>
           <mat-panel-description class="panel-description">
-            {{expense.amount | currency }} 
-            <mat-icon (click)="deleteExpense($event, i)">delete</mat-icon>
+            {{ expense.amount | currency }}
+            <mat-icon (click)="deleteExpense(i)">delete</mat-icon>
           </mat-panel-description>
         </mat-expansion-panel-header>
 
-        <form class="form" (ngSubmit)="onSubmit(i, panel)">
+        <form class="form"
+              (ngSubmit)="onSubmit(i, panel)"
+              #expenseForm="ngForm">
           <div class="form-container">
-            <mat-form-field appearance="fill" class="form-field">
+            <mat-form-field appearance="fill"
+                            class="form-field">
               <mat-label>Title</mat-label>
-              <input matInput type="text" [(ngModel)]="expense.title" name="expenseTitle{{i}}">
+              <input matInput
+                     type="text"
+                     [(ngModel)]="expense.title"
+                     name="expenseTitle{{i}}"
+                     required>
             </mat-form-field>
 
-            <mat-form-field appearance="fill" class="form-field">
+            <mat-form-field appearance="fill"
+                            class="form-field">
               <mat-label>Category</mat-label>
-              <mat-select [(ngModel)]="expense.name" name="expenseName{{i}}">
-                <mat-option *ngFor="let category of categories" [value]="category">
+              <mat-select [(ngModel)]="expense.category"
+                          name="expenseCategory{{i}}"
+                          required>
+                <mat-option [value]="''"
+                            disabled
+                            selected
+                            hidden>Please select a category</mat-option>
+                <mat-option *ngFor="let category of categories"
+                            [value]="category">
                   {{ category }}
                 </mat-option>
               </mat-select>
-            </mat-form-field> 
+            </mat-form-field>
 
-            <mat-form-field appearance="fill" class="form-field">
+            <mat-form-field appearance="fill"
+                            class="form-field">
               <mat-label>Amount</mat-label>
-              <input matInput type="number" [(ngModel)]="expense.amount" name="expenseAmount{{i}}">
+              <input matInput
+                     type="number"
+                     [(ngModel)]="expense.amount"
+                     name="expenseAmount{{i}}"
+                     required>
             </mat-form-field>
 
             <div class="button-row">
-              <button mat-raised-button color="primary" type="submit">Save</button>
-              <button mat-raised-button type="reset">Cancel</button>
+              <button mat-raised-button
+                      color="primary"
+                      type="submit"
+                      [disabled]="!expenseForm.form.valid">Save</button>
+              <button mat-raised-button
+                      type="reset">Cancel</button>
             </div>
           </div>
         </form>
@@ -43,12 +70,19 @@
 
     <div class="control-buttons">
       <div>
-        <button mat-raised-button color="primary" (click)="addExpense()">Add Expense</button>
-        <mat-slide-toggle class="multi-button" [(ngModel)]="multi">Allow Multi Expansion</mat-slide-toggle>
+        <button mat-raised-button
+                color="primary"
+                (click)="addExpense()">Add Expense</button>
+        <mat-slide-toggle class="multi-button"
+                          [(ngModel)]="multi">Allow Multi Expansion</mat-slide-toggle>
       </div>
       <div class="expand-collapse-buttons">
-        <button mat-button (click)="accordion.openAll()" [disabled]="!multi">Expand All</button>
-        <button mat-button (click)="accordion.closeAll()" [disabled]="!multi">Collapse All</button>
+        <button mat-button
+                (click)="accordion.openAll()"
+                [disabled]="!multi">Expand All</button>
+        <button mat-button
+                (click)="accordion.closeAll()"
+                [disabled]="!multi">Collapse All</button>
       </div>
     </div>
   </mat-accordion>

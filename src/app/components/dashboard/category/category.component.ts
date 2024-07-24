@@ -19,22 +19,14 @@ export class CategoryComponent implements OnInit {
 
   addCategory(): void {
     if (this.newCategory.trim()) {
-      // this.categories.push(this.newCategory.trim());
-
-      this.categoryService.addCategory(this.newCategory);
-
-      // this.categories = this.categoryService.getCategories();
-      // this.newCategory = '';
-      //call the service to update the categories
+      this.categoryService.addCategory(this.categories, this.newCategory);
     }
+    this.categories = this.categoryService.getCategories();
   }
 
   deleteCategory(category: string): void {
-    this.categoryService.deleteCategory(category);
+    this.categoryService.deleteCategory(this.categories, category);
     this.categories = this.categoryService.getCategories();
-
-
-    // this.categories = this.categories.filter(item => item !== category);
 
     // debugger;
     //   event.stopPropagation();
