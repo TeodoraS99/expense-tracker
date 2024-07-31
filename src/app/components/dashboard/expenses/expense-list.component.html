@@ -10,7 +10,8 @@
           <mat-panel-title>{{ expense.title}}</mat-panel-title>
           <mat-panel-description class="panel-description">
             {{ expense.amount | currency }}
-            <mat-icon (click)="deleteExpense(i)">delete</mat-icon>
+            <mat-icon (click)="deleteExpense(i)"
+                      class="deleteButton">delete</mat-icon>
           </mat-panel-description>
         </mat-expansion-panel-header>
 
@@ -67,6 +68,16 @@
         </form>
       </mat-expansion-panel>
     </div>
+
+    <div *ngIf="expenses.length === 0"
+         class="no-expenses-message">
+      <p>No expenses for the day.</p>
+    </div>
+
+    <div>
+      <p>Daily expenses: {{ dailyTotal | currency }}</p>
+    </div>
+
 
     <div class="control-buttons">
       <div>

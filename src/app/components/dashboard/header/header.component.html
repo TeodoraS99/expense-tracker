@@ -1,10 +1,16 @@
 <div class="expense-container">
-    <mat-tab-group [(selectedIndex)]="selectedTab"
+    <div style="display: flex; flex-direction: row; justify-content: space-around;">
+        <div>Weekly budget: {{ weeklyBudget| currency }}</div>
+        <div>Remaining budget: {{ remainingBudget | currency }}</div>
+    </div>
+
+    <mat-tab-group class="mat-elevation-z1"
                    mat-stretch-tabs
-                   class="mat-elevation-z1">
+                   [(selectedIndex)]="selectedTab">
         <mat-tab *ngFor="let tab of tabs"
                  [label]="tab">
-            <app-expense-list *ngIf="tab !== 'Summary'"></app-expense-list>
+            <app-expense-list *ngIf="tab !== 'Summary'"
+                              [tab]="tab"></app-expense-list>
             <app-summary *ngIf="tab === 'Summary'"></app-summary>
         </mat-tab>
     </mat-tab-group>
@@ -12,14 +18,12 @@
         <button mat-stroked-button
                 color="primary"
                 (click)="back()"
-                disabled
                 [disabled]="selectedTab === 0">
             {{ tabs[(selectedTab - 1 + tabs.length) % tabs.length] }}
         </button>
         <button mat-stroked-button
                 color="primary"
                 (click)="next()"
-                disabled
                 [disabled]="selectedTab === tabs.length - 1">
             {{ tabs[(selectedTab + 1) % tabs.length] }}
         </button>

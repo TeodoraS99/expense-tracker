@@ -17,8 +17,7 @@
     </mat-card-content>
 
     <div style="padding: 0 24px 24px 24px;">
-        <mat-selection-list
-                            style="padding: 0; border-radius: 8px; overflow: hidden; border: 1px solid #ccc; max-height: 60vh; overflow-y: auto;">
+        <mat-selection-list style="padding: 0; border-radius: 8px; overflow: hidden; border: 1px solid #ccc; max-height: 60vh; overflow-y: auto;">
             <mat-list-item *ngFor="let category of categories; let i = index"
                            style="padding: 12px;">
                 <div style="display: flex; align-items: center; justify-content: space-between; width: 99%;">
@@ -27,5 +26,9 @@
                 </div>
             </mat-list-item>
         </mat-selection-list>
+        <div *ngIf="categories.length === 0"
+             class="no-categories-message">
+            <p>No categories.</p>
+        </div>
     </div>
 </mat-card>

@@ -1,35 +1,56 @@
 import { Injectable } from '@angular/core';
-import { ExpenseInterface } from '../dashboard/interfaces/expense.interface';
-
+import { ExpenseInterface } from './../dashboard/interfaces/expense.interface';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ExpenseService {
   private readonly EXPENSE_KEY = 'expenses';
+  private readonly BUDGET_KEY = 'weeklyBudget';
 
   constructor() { }
 
-  getExpenses() {
+  getDayExpenses(tab: string): ExpenseInterface[] {
     let localStorageExpenses = localStorage.getItem(this.EXPENSE_KEY);
     if (localStorageExpenses) {
-      var expenses = JSON.parse(localStorageExpenses);
-      return expenses;
+      const expenses = JSON.parse(localStorageExpenses);
+      return expenses.filter((item: ExpenseInterface) => item.day === tab);
     } else {
       return [];
     }
   }
 
-  addExpense(expenses: ExpenseInterface[], expense: ExpenseInterface): void {
+  getAllExpenses() {
+    let localStorageExpenses = localStorage.getItem(this.EXPENSE_KEY);
+    if (localStorageExpenses) {
+      return JSON.parse(localStorageExpenses);
+    } else {
+      return [];
+    }
+  }
+
+  addExpense(expense: ExpenseInterface): void {
+    const allExpenses = this.getAllExpenses();
+    allExpenses.push(expense);
+    localStorage.setItem(this.EXPENSE_KEY, JSON.stringify(allExpenses));
+  }
+
+  deleteExpense(expense: ExpenseInterface): void {
+    let expenses = this.getAllExpenses();
+    expenses = expenses.filter((item: ExpenseInterface) => item.id !== expense.id);
     localStorage.setItem(this.EXPENSE_KEY, JSON.stringify(expenses));
   }
 
-  deleteExpense(expenses: ExpenseInterface[], expense: ExpenseInterface): void {
-    expenses = expenses.filter(item => item !== expense);
-    localStorage.setItem(this.EXPENSE_KEY, JSON.stringify(expenses));
-
-    // this.localService.saveData(this.CATEGORY_KEY, JSON.stringify(categories)) //linia asta e echivalentul lui 31
+  getWeeklyBudget(): number {//obtin bugetul din local storage
+    const budget = localStorage.getItem(this.BUDGET_KEY);
+    if (budget) {
+      return JSON.parse(budget);
+    } else {
+      return 0;
+    }
   }
 
-
+  addWeeklyBudget(budget: number): void {//il stochez
+    localStorage.setItem(this.BUDGET_KEY, JSON.stringify(budget));
+  }
 }

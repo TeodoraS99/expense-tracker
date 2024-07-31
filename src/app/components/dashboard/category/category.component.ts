@@ -20,8 +20,9 @@ export class CategoryComponent implements OnInit {
   addCategory(): void {
     if (this.newCategory.trim()) {
       this.categoryService.addCategory(this.categories, this.newCategory);
+      this.categories = this.categoryService.getCategories();
+      this.newCategory = '';  
     }
-    this.categories = this.categoryService.getCategories();
   }
 
   deleteCategory(category: string): void {

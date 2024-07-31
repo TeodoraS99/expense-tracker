@@ -56,6 +56,24 @@ export class SummaryComponent {
         "amount": 50,
       },
       {
+        "day": "Luni",
+        "title": "Inghetata",
+        "category": "Mancare",
+        "amount": 30,
+      },
+      {
+        "day": "Luni",
+        "title": "Prajitura",
+        "category": "Mancare",
+        "amount": 20,
+      },
+      {
+        "day": "Luni",
+        "title": "Gaz",
+        "category": "Facturi",
+        "amount": 200,
+      },
+      {
         "day": "Marti",
         "title": "Cartofi prajiti",
         "category": "Mancare",
