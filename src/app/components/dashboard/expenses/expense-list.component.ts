@@ -1,10 +1,10 @@
-import { Component, ElementRef, Input, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, QueryList, Renderer2, ViewChild, ViewChildren } from '@angular/core';
 import { MatAccordion, MatExpansionPanel } from '@angular/material/expansion';
 import { v4 as uuidv4 } from 'uuid';
 import { CategoryService } from '../../service/category.service';
 import { ExpenseService } from '../../service/expense.service';
-import { ExpenseInterface } from '../interfaces/expense.interface';
 import { HeaderComponent } from '../header/header.component';
+import { ExpenseInterface } from '../interfaces/expense.interface';
 
 @Component({
   selector: 'app-expense-list',
@@ -19,15 +19,16 @@ export class ExpenseListComponent implements OnInit {
   dailyTotal: number = 0;
 
   @Input() tab: string = "";
-
   @ViewChild(MatAccordion) accordion!: MatAccordion;
   @ViewChildren(MatExpansionPanel) panels!: QueryList<MatExpansionPanel>;
-  @ViewChildren('firstInput') firstInputs!: QueryList<ElementRef>;
+  @ViewChildren('firstInput') firstInputs!: ElementRef;
 
   constructor(
     private categoryService: CategoryService,
     private expenseService: ExpenseService,
-    private headerComponent: HeaderComponent
+    private headerComponent: HeaderComponent,
+    private renderer: Renderer2,
+    // private elementRef: ElementRef
   ) { }
 
   ngOnInit() {
@@ -36,6 +37,19 @@ export class ExpenseListComponent implements OnInit {
     this.expenses = this.allExpenses.filter((item: ExpenseInterface) => item.day == this.tab);
     this.calculateDailyTotal();
   }
+
+  ngAfterViewInit() {
+    setTimeout(() => {
+      var elem = this.renderer.selectRootElement('#firstInput');
+      this.renderer.listen(elem, "focus", () => { console.log('focus') });
+      this.renderer.listen(elem, "blur", () => { console.log('blur') });
+      elem.focus();
+    }, 1000);
+  }
+
+  //   ngAfterViewInit(){
+  //     this.elementRef.nativeElement.focus();
+  // }
 
   addExpense() {
     const emptyExpense: ExpenseInterface = { id: uuidv4(), title: '', category: '', amount: 0, day: this.tab };
@@ -46,17 +60,21 @@ export class ExpenseListComponent implements OnInit {
         lastPanel.open();
       }
     }, 0);
-    //  this.firstInputs.nativeElement.focus();
+    // this.firstInputs.nativeElement.focus();
+    this.renderer.selectRootElement('#firstInput').focus();
   }
 
   onSubmit(index: number, panel: MatExpansionPanel) {
     const expense = this.expenses[index];
-    console.log('Submitted expense:', expense);
+    const currentBudget = this.expenseService.getRemainingBudget();//aflam bugetul ramas
+    if (expense.amount > currentBudget) { //verific daca cheltuiala este mai mare ca bugetul
+      alert('Adding this expense exceeds your remaining budget.');
+      return;
+    }
     this.allExpenses.push(expense);
     this.expenseService.addExpense(expense);
     this.calculateDailyTotal();
     panel.close();
-
     this.headerComponent.updateBudget(); //anuntam header ca s-a adaugat un expense
   }
 
@@ -64,11 +82,10 @@ export class ExpenseListComponent implements OnInit {
     this.expenseService.deleteExpense(this.expenses[index]);
     this.expenses = this.expenseService.getDayExpenses(this.tab);
     this.calculateDailyTotal();
-
     this.headerComponent.updateBudget(); //anuntam header ca s-a sters un expense
   }
 
-  calculateDailyTotal() {
+  calculateDailyTotal() {//calc suma cheltuielilor pt o anumita zi
     this.dailyTotal = this.expenses.reduce((total, expense) => total + expense.amount, 0);
   }
 }

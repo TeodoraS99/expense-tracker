@@ -23,6 +23,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatCardModule } from '@angular/material/card';
 import { MatListModule } from '@angular/material/list';
+import { MatDialogModule } from '@angular/material/dialog';
 // App routing
 import { AppRoutingModule } from './app-routing.module';
 // App components
@@ -86,9 +87,12 @@ const firebaseConfig = {
     MatCardModule,
     MatListModule,
     MatSelectModule,
+    MatDialogModule,
 
     // AG Grid
     AgGridModule,
+
+
 
   ],
   providers: [

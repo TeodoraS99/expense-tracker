@@ -53,4 +53,10 @@ export class ExpenseService {
   addWeeklyBudget(budget: number): void {//il stochez
     localStorage.setItem(this.BUDGET_KEY, JSON.stringify(budget));
   }
+
+  getRemainingBudget(): number { //calculeaza bugetul ramas
+    const weeklyBudget = this.getWeeklyBudget(); //aflam buget saptamana;
+    const totalExpenses = this.getAllExpenses().reduce((sum: number, expense: ExpenseInterface) => sum + expense.amount, 0); //calc total cheltuieli
+    return weeklyBudget - totalExpenses; //return buget ramas
+  }
 }

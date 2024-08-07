@@ -22,7 +22,10 @@
             <mat-form-field appearance="fill"
                             class="form-field">
               <mat-label>Title</mat-label>
-              <input matInput
+              <input #firstInput
+                     autofocus
+                     id="firstInput"
+                     matInput
                      type="text"
                      [(ngModel)]="expense.title"
                      name="expenseTitle{{i}}"

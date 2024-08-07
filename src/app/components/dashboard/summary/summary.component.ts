@@ -1,13 +1,21 @@
+import "@ag-grid-community/styles/ag-grid.css";
+import "@ag-grid-community/styles/ag-theme-quartz.css";
 import { HttpClient } from '@angular/common/http';
-import { Component } from '@angular/core';
-import { IExpenseData } from './interfaces';
+import { Component, ViewChild } from '@angular/core';
+import { AgGridAngular } from "ag-grid-angular";
 import {
+  ClientSideRowModelModule,
   ColDef,
+  ExcelExportParams,
+  GridApi,
   GridReadyEvent,
-  RowGroupingDisplayType
+  ModuleRegistry,
+  ProcessCellForExportParams,
+  ProcessRowGroupForExportParams,
+  ValueFormatterParams
 } from 'ag-grid-community';
 import 'ag-grid-enterprise';
-import { GridApi } from 'ag-grid-enterprise';
+import { IExpenseData } from './interfaces';
 
 
 @Component({
@@ -15,76 +23,80 @@ import { GridApi } from 'ag-grid-enterprise';
   templateUrl: './summary.component.html',
   styleUrls: ['./summary.component.css'],
 })
-
 export class SummaryComponent {
+  @ViewChild(AgGridAngular) agGrid!: AgGridAngular;
+
   private gridApi!: GridApi<IExpenseData>;
+
   public columnDefs: ColDef[] = [
-    { field: "day", rowGroup: true, hide: true, sortable: true },
-    { field: "category", rowGroup: true, hide: true, sortable: true },
-    { field: "title", minWidth: 250 },
-    { field: "amount", minWidth: 200 },
+    { field: "day", rowGroup: true, hide: true, width: 80 },
+    { field: "category", headerName: "Category", minWidth: 100, width: 120 },
+    { field: "title", headerName: "Expense Type", minWidth: 150, width: 250 },
+    { field: "amount", headerName: "Amount", minWidth: 80, width: 100, aggFunc: 'sum', valueFormatter: this.currencyFormatter },
   ];
+
   public defaultColDef: ColDef = {
     flex: 1,
-    minWidth: 100,
-    sortable: false,
+    minWidth: 75,
+    sortable: true,
+    resizable: true,
+    filter: true
   };
-  public groupDisplayType: RowGroupingDisplayType = "groupRows";
-  public rowGroupPanelShow: "always" | "onlyWhenGrouping" | "never" = "always";
-  public groupDefaultExpanded = 1;
-  public rowData!: IExpenseData[];
-  public themeClass: string = "ag-theme-quartz";
 
-  constructor(private http: HttpClient) { }
-  ngOnInit() { }
+  public autoGroupColumnDef: ColDef = {
+    headerName: 'Day',
+    minWidth: 75,
+    cellRendererParams: {
+      suppressCount: true,
+    }
+  };
+
+  public groupDisplayType = 'multipleColumns';
+  public defaultExcelExportParams: ExcelExportParams = getParams();
+  public rowData!: IExpenseData[];
+  public grandTotalRow: "top" | "bottom" = "bottom";
+
+  constructor(private http: HttpClient) {
+    ModuleRegistry.registerModules([ClientSideRowModelModule])
+  }
+
+  onBtExport() {
+    this.gridApi.exportDataAsExcel(getParams());
+  }
 
   onGridReady(params: GridReadyEvent<IExpenseData>) {
-    // this.http
-    //   .get<
-    //     IExpenseData[]
-    //   >("https://www.ag-grid.com/example-assets/olympic-winners.json")
-    //   .subscribe((data) => {
-    //     this.rowData = data;
-    //   });
-    // this.gridApi = params.api;
+    this.gridApi = params.api;
 
     this.rowData = [
-      {
-        "day": "Luni",
-        "title": "Cartofi prajiti",
-        "category": "Mancare",
-        "amount": 50,
-      },
-      {
-        "day": "Luni",
-        "title": "Inghetata",
-        "category": "Mancare",
-        "amount": 30,
-      },
-      {
-        "day": "Luni",
-        "title": "Prajitura",
-        "category": "Mancare",
-        "amount": 20,
-      },
-      {
-        "day": "Luni",
-        "title": "Gaz",
-        "category": "Facturi",
-        "amount": 200,
-      },
-      {
-        "day": "Marti",
-        "title": "Cartofi prajiti",
-        "category": "Mancare",
-        "amount": 50,
-      },
-      {
-        "day": "Miercuri",
-        "title": "Cartofi prajiti",
-        "category": "Mancare",
-        "amount": 50,
-      }
-    ]
+      { day: "Luni", title: "Cartofi prajiti", category: "Mancare", amount: 50 },
+      { day: "Luni", title: "Inghetata", category: "Mancare", amount: 30 },
+      { day: "Luni", title: "Prajitura", category: "Mancare", amount: 20 },
+      { day: "Luni", title: "Gaz", category: "Facturi", amount: 200 },
+      { day: "Marti", title: "Cartofi prajiti", category: "Mancare", amount: 50 },
+      { day: "Miercuri", title: "Cartofi prajiti", category: "Mancare", amount: 50 }
+    ];
+  }
+
+  currencyFormatter(params: ValueFormatterParams) {
+    return '€' + params.value.toFixed(2);
   }
 }
+
+const getParams = (): ExcelExportParams => ({
+  columnWidth: 100,
+  processCellCallback: (params: ProcessCellForExportParams) => {
+    const value = params.value;
+    return value === undefined ? '' : value;
+  },
+  processRowGroupCallback: (params: ProcessRowGroupForExportParams) => {
+    const { node } = params;
+    if (!node.footer) {
+      return `${node.key}`;
+    }
+    const isRootLevel = node.level === -1;
+    if (isRootLevel) {
+      return "Weekly Total";
+    }
+    return `Sub Total (${node.key})`;
+  },
+});
