@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ExpenseService } from '../../service/expense.service';
 import { ExpenseInterface } from '../interfaces/expense.interface';
+import { MatDialog } from '@angular/material/dialog';
+import { WeeklyBudgetDialogComponent } from './weekly-budget-dialog.component';
 
 @Component({
   selector: 'app-header',
@@ -13,11 +15,19 @@ export class HeaderComponent implements OnInit {
   weeklyBudget = 0;
   remainingBudget = 0;
 
-  constructor(private expenseService: ExpenseService) { }
+  @ViewChild('firstInput') firstInputElement!: ElementRef;
+
+  constructor(private expenseService: ExpenseService,
+    private dialog: MatDialog
+  ) {
+    console.log("Constructor de expense list");
+   }
 
   ngOnInit() {
     this.weeklyBudget = this.expenseService.getWeeklyBudget();
     this.updateBudget();
+    this.checkAndAddBudget();
+
   }
 
   // updateBudget() { // actualizeaza bugetul in sereviciu pe baza cheltuielilor
@@ -27,6 +37,37 @@ export class HeaderComponent implements OnInit {
   //   console.log(allExpenses);
   //   console.log(weeklyExpenses);
   // }
+
+
+  ngAfterViewInit() {
+    if (this.firstInputElement) {
+      this.firstInputElement.nativeElement.focus();
+    }
+    // this.checkAndAddBudget();
+  }
+
+  checkAndAddBudget() {
+    const weeklyBudget = this.expenseService.getWeeklyBudget(); //luam bugetul
+    if (!weeklyBudget || weeklyBudget < 10) {  //verificam daca exista sau nu buget dau daca e prea mic
+      console.log("Deschid dialogul de buget");
+      this.openBudgetDialog();
+    }
+  }
+
+  openBudgetDialog(): void {
+    const dialogRef = this.dialog.open(WeeklyBudgetDialogComponent, {
+      width: '500px',
+      data: { budget: this.expenseService.getWeeklyBudget() },
+
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.expenseService.addWeeklyBudget(result);
+        this.updateBudget();
+      }
+    });
+  }
 
   updateBudget() {
     this.weeklyBudget = this.expenseService.getWeeklyBudget(); // Actualizează bugetul săptămânal

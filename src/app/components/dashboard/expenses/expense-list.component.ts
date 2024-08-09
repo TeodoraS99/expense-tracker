@@ -1,10 +1,12 @@
 import { Component, ElementRef, Input, OnInit, QueryList, Renderer2, ViewChild, ViewChildren } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatAccordion, MatExpansionPanel } from '@angular/material/expansion';
 import { v4 as uuidv4 } from 'uuid';
 import { CategoryService } from '../../service/category.service';
 import { ExpenseService } from '../../service/expense.service';
 import { HeaderComponent } from '../header/header.component';
 import { ExpenseInterface } from '../interfaces/expense.interface';
+import { WeeklyBudgetDialogComponent } from '../header/weekly-budget-dialog.component';
 
 @Component({
   selector: 'app-expense-list',
@@ -21,34 +23,54 @@ export class ExpenseListComponent implements OnInit {
   @Input() tab: string = "";
   @ViewChild(MatAccordion) accordion!: MatAccordion;
   @ViewChildren(MatExpansionPanel) panels!: QueryList<MatExpansionPanel>;
-  @ViewChildren('firstInput') firstInputs!: ElementRef;
+  // @ViewChild('firstInput') firstInputElement!: ElementRef;
 
   constructor(
     private categoryService: CategoryService,
     private expenseService: ExpenseService,
     private headerComponent: HeaderComponent,
     private renderer: Renderer2,
-    // private elementRef: ElementRef
-  ) { }
+    // private dialog: MatDialog,
+  ) {
+    // console.log("Constructor de expense list");
+  }
 
   ngOnInit() {
     this.categories = this.categoryService.getCategories();
     this.allExpenses = this.expenseService.getDayExpenses(this.tab);
     this.expenses = this.allExpenses.filter((item: ExpenseInterface) => item.day == this.tab);
     this.calculateDailyTotal();
+    // this.checkAndAddBudget();
   }
 
-  ngAfterViewInit() {
-    setTimeout(() => {
-      var elem = this.renderer.selectRootElement('#firstInput');
-      this.renderer.listen(elem, "focus", () => { console.log('focus') });
-      this.renderer.listen(elem, "blur", () => { console.log('blur') });
-      elem.focus();
-    }, 1000);
-  }
+  // ngAfterViewInit() {
+  //   if (this.firstInputElement) {
+  //     this.firstInputElement.nativeElement.focus();
+  //   }
+  //   // this.checkAndAddBudget();
+  // }
 
-  //   ngAfterViewInit(){
-  //     this.elementRef.nativeElement.focus();
+  // checkAndAddBudget() {
+  //   const weeklyBudget = this.expenseService.getWeeklyBudget(); //luam bugetul
+  //   if (!weeklyBudget || weeklyBudget < 10) {  //verificam daca exista sau nu buget dau daca e prea mic
+  //     console.log("Deschid dialogul de buget");
+  //     this.openBudgetDialog();
+  //   }
+  // }
+
+  // openBudgetDialog(): void {
+  //   const dialogRef = this.dialog.open(WeeklyBudgetDialogComponent, {
+  //     width: '500px',
+  //     data: { budget: this.expenseService.getWeeklyBudget() },
+
+  //   });
+
+  //   dialogRef.afterClosed().subscribe(result => {
+  //     if (result) {
+  //       this.expenseService.addWeeklyBudget(result);
+  //       this.headerComponent.updateBudget();
+  //     }
+  //   });
   // }
 
   addExpense() {

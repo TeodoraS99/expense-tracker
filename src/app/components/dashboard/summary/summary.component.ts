@@ -21,7 +21,8 @@ import { IExpenseData } from './interfaces';
 @Component({
   selector: 'app-summary',
   templateUrl: './summary.component.html',
-  styleUrls: ['./summary.component.css'],
+  styleUrls: ['./summary.component.css']
+  // standalone: true,
 })
 export class SummaryComponent {
   @ViewChild(AgGridAngular) agGrid!: AgGridAngular;

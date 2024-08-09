@@ -1,0 +1,27 @@
+<h1 mat-dialog-title
+    style="font-size: 1.2em; margin-bottom: 15px;">Add your weekly budget</h1>
+
+<div mat-dialog-content
+     style="display: flex; flex-direction: column; gap: 15px;">
+    <mat-form-field appearance="fill"
+                    style="width: 100%;">
+        <mat-label>Budget (euro)</mat-label>
+        <input matInput
+               type="number"
+               [formControl]="budgetControl"
+               placeholder="Enter your budget (min 10€)"
+               min="10"
+               (keyup.enter)="onSave()"
+               style="font-size: 1em; padding: 8px;" />
+        <mat-error *ngIf="budgetControl.hasError('min')"
+                   style="font-size: 0.9em;">
+            The minimum budget is 10 euros.
+        </mat-error>
+    </mat-form-field>
+</div>
+
+<div mat-dialog-actions style="justify-content: flex-end; margin-top: 20px;">
+    <button mat-button
+            [mat-dialog-close]="budgetControl.value"
+            [disabled]="!budgetControl.valid">Save</button>
+</div>

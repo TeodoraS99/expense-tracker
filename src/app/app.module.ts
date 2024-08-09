@@ -37,6 +37,7 @@ import { NavBarComponent } from './components/dashboard/nav-bar/nav-bar.componen
 import { AuthenticationComponent } from './components/authentication/authentication.component';
 import { CategoryComponent } from './components/dashboard/category/category.component';
 import { MatSelectModule } from '@angular/material/select';
+import { WeeklyBudgetDialogComponent } from './components/dashboard/header/weekly-budget-dialog.component';
 
 
 const firebaseConfig = {
@@ -57,7 +58,8 @@ const firebaseConfig = {
     SummaryComponent,
     NavBarComponent,
     AuthenticationComponent,
-    CategoryComponent
+    CategoryComponent,
+    WeeklyBudgetDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -91,8 +93,6 @@ const firebaseConfig = {
 
     // AG Grid
     AgGridModule,
-
-
 
   ],
   providers: [
