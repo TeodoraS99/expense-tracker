@@ -1,8 +1,8 @@
+import { HttpClientModule } from '@angular/common/http';
 import { importProvidersFrom, NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import { HttpClientModule } from '@angular/common/http';
 // Firebase imports
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { AngularFireModule } from '@angular/fire/compat';
@@ -11,33 +11,36 @@ import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 // Material Design imports
 import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatDialogModule } from '@angular/material/dialog';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { MatListModule } from '@angular/material/list';
+import { MatMenuModule } from '@angular/material/menu';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatMenuModule } from '@angular/material/menu';
-import { MatCardModule } from '@angular/material/card';
-import { MatListModule } from '@angular/material/list';
-import { MatDialogModule } from '@angular/material/dialog';
+import { MatSelectModule } from '@angular/material/select';
 // App routing
 import { AppRoutingModule } from './app-routing.module';
 // App components
 import { AppComponent } from './app.component';
-import { ExpenseListComponent } from './components/dashboard/expenses/expense-list.component';
-import { HeaderComponent } from './components/dashboard/header/header.component';
-import { SummaryComponent } from './components/dashboard/summary/summary.component';
+import { WeeklyBudgetDialogComponent } from './components/dialog/weekly-budget-dialog.component';
+import { ExpenseListComponent } from './components/expenses/expense-list.component';
+import { SummaryComponent } from './components/summary/summary.component';
+import { FooterComponent } from './core/footer/footer.component';
+import { HeaderComponent } from './core/header/header.component';
+import { AuthenticationComponent } from './pages/authentication/authentication.component';
+import { CategoryComponent } from './pages/category/category.component';
+import { ExpenseTabComponent } from './components/expense-tab.component/expense-tab.component';
+import { ExpenseFormComponent } from './components/expense-form/expense-form.component';
+
 // AG Grid
 import { AgGridModule } from 'ag-grid-angular';
-import { NavBarComponent } from './components/dashboard/nav-bar/nav-bar.component';
-import { AuthenticationComponent } from './components/authentication/authentication.component';
-import { CategoryComponent } from './components/dashboard/category/category.component';
-import { MatSelectModule } from '@angular/material/select';
-import { WeeklyBudgetDialogComponent } from './components/dashboard/header/weekly-budget-dialog.component';
 
 
 const firebaseConfig = {
@@ -54,12 +57,15 @@ const firebaseConfig = {
   declarations: [
     AppComponent,
     HeaderComponent,
-    ExpenseListComponent,
-    SummaryComponent,
-    NavBarComponent,
+    FooterComponent,
     AuthenticationComponent,
     CategoryComponent,
-    WeeklyBudgetDialogComponent
+    SummaryComponent,
+    WeeklyBudgetDialogComponent,
+    ExpenseListComponent,
+    ExpenseTabComponent,
+    ExpenseFormComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -92,7 +98,7 @@ const firebaseConfig = {
     MatDialogModule,
 
     // AG Grid
-    AgGridModule,
+    AgGridModule
 
   ],
   providers: [

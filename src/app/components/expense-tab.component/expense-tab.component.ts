@@ -1,15 +1,16 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { ExpenseService } from '../../service/expense.service';
-import { ExpenseInterface } from '../interfaces/expense.interface';
 import { MatDialog } from '@angular/material/dialog';
-import { WeeklyBudgetDialogComponent } from './weekly-budget-dialog.component';
+import { ExpenseService } from '../../service/expense.service';
+import { ExpenseInterface } from '../../shared/interfaces/expense.interface';
+import { WeeklyBudgetDialogComponent } from '../dialog/weekly-budget-dialog.component';
 
 @Component({
   selector: 'app-header',
-  templateUrl: './header.component.html',
-  styleUrl: './header.component.css'
+  templateUrl: './expense-tab.component.html',
+  styleUrl: './expense-tab.component.css'
 })
-export class HeaderComponent implements OnInit {
+
+export class ExpenseTabComponent implements OnInit {
   tabs = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday', 'Summary'];
   selectedTab = 0;
   weeklyBudget = 0;
@@ -19,31 +20,18 @@ export class HeaderComponent implements OnInit {
 
   constructor(private expenseService: ExpenseService,
     private dialog: MatDialog
-  ) {
-    console.log("Constructor de expense list");
-   }
+  ) { }
 
   ngOnInit() {
     this.weeklyBudget = this.expenseService.getWeeklyBudget();
     this.updateBudget();
     this.checkAndAddBudget();
-
   }
-
-  // updateBudget() { // actualizeaza bugetul in sereviciu pe baza cheltuielilor
-  //   const allExpenses = this.expenseService.getAllExpenses();
-  //   const weeklyExpenses = allExpenses.reduce((total: number, expense: ExpenseInterface) => total + expense.amount, 0);
-  //   this.remainingBudget = this.weeklyBudget - weeklyExpenses;
-  //   console.log(allExpenses);
-  //   console.log(weeklyExpenses);
-  // }
-
 
   ngAfterViewInit() {
     if (this.firstInputElement) {
       this.firstInputElement.nativeElement.focus();
     }
-    // this.checkAndAddBudget();
   }
 
   checkAndAddBudget() {
@@ -58,7 +46,6 @@ export class HeaderComponent implements OnInit {
     const dialogRef = this.dialog.open(WeeklyBudgetDialogComponent, {
       width: '500px',
       data: { budget: this.expenseService.getWeeklyBudget() },
-
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -69,23 +56,11 @@ export class HeaderComponent implements OnInit {
     });
   }
 
-  updateBudget() {
-    this.weeklyBudget = this.expenseService.getWeeklyBudget(); // Actualizează bugetul săptămânal
+  updateBudget() {//actualizeaza bugetul in sereviciu pe baza cheltuielilor
+    this.weeklyBudget = this.expenseService.getWeeklyBudget();
     const allExpenses = this.expenseService.getAllExpenses();
     const weeklyExpenses = allExpenses.reduce((total: number, expense: ExpenseInterface) => total + expense.amount, 0);
     this.remainingBudget = this.weeklyBudget - weeklyExpenses;
-  }
-
-  back() {
-    if (this.selectedTab > 0) {
-      this.selectedTab--;
-    }
-  }
-
-  next() {
-    if (this.selectedTab < this.tabs.length - 1) {
-      this.selectedTab++;
-    }
   }
 
   remainingBudgetColor() {
@@ -98,6 +73,4 @@ export class HeaderComponent implements OnInit {
       return 'inherit'; // mai mult de 25 culoarea initiala mostenita
     }
   }
-
-
 }

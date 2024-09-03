@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { ExpenseInterface } from './../dashboard/interfaces/expense.interface';
+import { ExpenseInterface } from '../shared/interfaces/expense.interface';
+
 
 @Injectable({
   providedIn: 'root'
@@ -58,5 +59,9 @@ export class ExpenseService {
     const weeklyBudget = this.getWeeklyBudget(); //aflam buget saptamana;
     const totalExpenses = this.getAllExpenses().reduce((sum: number, expense: ExpenseInterface) => sum + expense.amount, 0); //calc total cheltuieli
     return weeklyBudget - totalExpenses; //return buget ramas
+  }
+
+  calculateDailyTotal(expenses: ExpenseInterface[]): number {//calculeaza daily total
+    return expenses.reduce((total, expense) => total + expense.amount, 0);
   }
 }

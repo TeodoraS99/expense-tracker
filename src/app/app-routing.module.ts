@@ -1,17 +1,18 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AuthenticationComponent } from './components/authentication/authentication.component';
-import { HeaderComponent } from './components/dashboard/header/header.component';
-import { NavBarComponent } from './components/dashboard/nav-bar/nav-bar.component';
-import { CategoryComponent } from './components/dashboard/category/category.component';
+import { HeaderComponent } from './core/header/header.component';
+import { CategoryComponent } from './pages/category/category.component';
+import { AuthenticationComponent } from './pages/authentication/authentication.component';
+import { ExpenseTabComponent } from './components/expense-tab.component/expense-tab.component';
+
 
 const routes: Routes = [
   {
     path: '',
-    component: NavBarComponent,
+    component: HeaderComponent,
     children: [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
-      { path: 'dashboard', component: HeaderComponent },
+      { path: 'dashboard', component: ExpenseTabComponent },
       { path: 'login', component: AuthenticationComponent },
       { path: 'category', component: CategoryComponent },
 

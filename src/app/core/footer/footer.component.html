@@ -1,0 +1,14 @@
+<div class="button-container">
+    <button mat-stroked-button
+            color="primary"
+            (click)="back()"
+            [disabled]="selectedTab === 0">
+        {{ tabs[(selectedTab - 1 + tabs.length) % tabs.length] }}
+    </button>
+    <button mat-stroked-button
+            color="primary"
+            (click)="next()"
+            [disabled]="selectedTab === tabs.length - 1">
+        {{ tabs[(selectedTab + 1) % tabs.length] }}
+    </button>
+</div>

@@ -1,0 +1,56 @@
+<!-- FORMULAR ADAUGARE CHELTUIALA -->
+<form class="form"
+      (ngSubmit)="onSubmit(index, panel)"
+      #expenseForm="ngForm">
+  <div class="form-container">
+    <mat-form-field appearance="fill"
+                    class="form-field">
+      <mat-label>Title</mat-label>
+      <input #firstInput
+             autofocus
+             id="firstInput"
+             matInput
+             type="text"
+             [(ngModel)]="expense.title"
+             name="expenseTitle{{index}}"
+             required>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill"
+                    class="form-field">
+      <mat-label>Category</mat-label>
+      <mat-select [(ngModel)]="expense.category"
+                  name="expenseCategory{{index}}"
+                  required>
+        <mat-option [value]="''"
+                    disabled
+                    selected
+                    hidden>Please select a category</mat-option>
+        <mat-option *ngFor="let category of categories"
+                    [value]="category">
+          {{ category }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill"
+                    class="form-field">
+      <mat-label>Amount</mat-label>
+      <input matInput
+             type="number"
+             [(ngModel)]="expense.amount"
+             name="expenseAmount{{index}}"
+             required>
+    </mat-form-field>
+
+    <div class="button-row">
+      <button mat-raised-button
+              color="primary"
+              type="submit"
+              [disabled]="!expenseForm.form.valid">Save</button>
+
+      <button mat-raised-button
+              type="reset">Cancel</button>
+    </div>
+  </div>
+</form>

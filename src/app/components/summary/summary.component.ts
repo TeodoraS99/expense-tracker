@@ -15,7 +15,7 @@ import {
   ValueFormatterParams
 } from 'ag-grid-community';
 import 'ag-grid-enterprise';
-import { IExpenseData } from './interfaces';
+import { ExpenseInterface } from "../../shared/interfaces/expense.interface";
 
 
 @Component({
@@ -25,9 +25,11 @@ import { IExpenseData } from './interfaces';
   // standalone: true,
 })
 export class SummaryComponent {
+  // @Output() exportedExpenses: 
+
   @ViewChild(AgGridAngular) agGrid!: AgGridAngular;
 
-  private gridApi!: GridApi<IExpenseData>;
+  private gridApi!: GridApi<ExpenseInterface>;
 
   public columnDefs: ColDef[] = [
     { field: "day", rowGroup: true, hide: true, width: 80 },
@@ -54,7 +56,7 @@ export class SummaryComponent {
 
   public groupDisplayType = 'multipleColumns';
   public defaultExcelExportParams: ExcelExportParams = getParams();
-  public rowData!: IExpenseData[];
+  public rowData!: ExpenseInterface[];
   public grandTotalRow: "top" | "bottom" = "bottom";
 
   constructor(private http: HttpClient) {
@@ -65,19 +67,17 @@ export class SummaryComponent {
     this.gridApi.exportDataAsExcel(getParams());
   }
 
-  onGridReady(params: GridReadyEvent<IExpenseData>) {
+  onGridReady(params: GridReadyEvent<ExpenseInterface>) {
     this.gridApi = params.api;
-
     this.rowData = [
-      { day: "Luni", title: "Cartofi prajiti", category: "Mancare", amount: 50 },
-      { day: "Luni", title: "Inghetata", category: "Mancare", amount: 30 },
-      { day: "Luni", title: "Prajitura", category: "Mancare", amount: 20 },
-      { day: "Luni", title: "Gaz", category: "Facturi", amount: 200 },
-      { day: "Marti", title: "Cartofi prajiti", category: "Mancare", amount: 50 },
-      { day: "Miercuri", title: "Cartofi prajiti", category: "Mancare", amount: 50 }
+      { id: '', day: "Luni", title: "Cartofi prajiti", category: "Mancare", amount: 50 },
+      { id: '', day: "Luni", title: "Inghetata", category: "Mancare", amount: 30 },
+      { id: '', day: "Luni", title: "Prajitura", category: "Mancare", amount: 20 },
+      { id: '', day: "Luni", title: "Gaz", category: "Facturi", amount: 200 },
+      { id: '', day: "Marti", title: "Cartofi prajiti", category: "Mancare", amount: 50 },
+      { id: '', day: "Miercuri", title: "Cartofi prajiti", category: "Mancare", amount: 50 }
     ];
   }
-
   currencyFormatter(params: ValueFormatterParams) {
     return '€' + params.value.toFixed(2);
   }

@@ -1,0 +1,47 @@
+.headers-align .mat-expansion-panel-header-description {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.form {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 245px;
+    margin: 20px auto;
+    padding: 16px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.mat-form-field {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.control-buttons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 15px;
+}
+
+.multi-button {
+    margin: 10px;
+}
+
+.expand-collapse-buttons {
+    display: flex;
+    justify-content: flex-end !important;
+}
+
+.button-row {
+    display: flex;
+    justify-content: space-between;
+}
+
+.deleteButton {
+    margin-left: auto;
+    cursor: pointer;
+}

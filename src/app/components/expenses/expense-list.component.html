@@ -1,0 +1,58 @@
+<div style="margin: 1.5rem;"
+     class="expense">
+  <mat-accordion class="headers-align"
+                 [multi]="true">
+    <!-- AFISARE LISTA CHELTUIELI -->
+    <div class="accordion-container">
+      <mat-expansion-panel *ngFor="let expense of expenses; let i = index"
+                           #panel
+                           class="expansion-panel">
+        <mat-expansion-panel-header class="panel-header">
+          <mat-panel-title>{{ expense.title }}</mat-panel-title>
+          <mat-panel-description class="panel-description">
+            {{ expense.amount | currency }}
+            <mat-icon (click)="deleteExpense(i)"
+                      class="deleteButton">delete</mat-icon>
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+
+        <!-- COMPONENTA FORMULAR unde se primesc date de la parinte si se apeleaza saveExpense-->
+        <app-expense-form [expense]="expense"
+                          [categories]="categories"
+                          [index]="i"
+                          [panel]="panel"
+                          (saveExpense)="saveExpense($event)">
+        </app-expense-form>
+
+      </mat-expansion-panel>
+    </div>
+
+    <!-- MESAJ CAND NU SUNT CHELTUIELI -->
+    <div *ngIf="expenses.length === 0"
+         class="no-expenses-message">
+      <p>No expenses for the day.</p>
+    </div>
+
+    <div>
+      <p>Daily expenses: {{ dailyTotal | currency }}</p>
+    </div>
+
+    <div class="control-buttons">
+      <div>
+        <button mat-raised-button
+                color="primary"
+                (click)="addExpense()">Add Expense</button>
+        <mat-slide-toggle class="multi-button"
+                          [(ngModel)]="multi">Allow Multi Expansion</mat-slide-toggle>
+      </div>
+      <div class="expand-collapse-buttons">
+        <button mat-button
+                (click)="accordion.openAll()"
+                [disabled]="!multi">Expand All</button>
+        <button mat-button
+                (click)="accordion.closeAll()"
+                [disabled]="!multi">Collapse All</button>
+      </div>
+    </div>
+  </mat-accordion>
+</div>

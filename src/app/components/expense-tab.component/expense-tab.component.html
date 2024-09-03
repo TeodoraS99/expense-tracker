@@ -3,6 +3,7 @@
         <div>Weekly budget: {{ weeklyBudget| currency }}</div>
         <div [ngStyle]="{color: remainingBudgetColor()}">Remaining budget: {{ remainingBudget | currency }}</div>
     </div>
+
     <mat-tab-group class="mat-elevation-z1"
                    mat-stretch-tabs
                    [(selectedIndex)]="selectedTab">
@@ -13,18 +14,7 @@
             <app-summary *ngIf="tab === 'Summary'"></app-summary>
         </mat-tab>
     </mat-tab-group>
-    <div class="button-container">
-        <button mat-stroked-button
-                color="primary"
-                (click)="back()"
-                [disabled]="selectedTab === 0">
-            {{ tabs[(selectedTab - 1 + tabs.length) % tabs.length] }}
-        </button>
-        <button mat-stroked-button
-                color="primary"
-                (click)="next()"
-                [disabled]="selectedTab === tabs.length - 1">
-            {{ tabs[(selectedTab + 1) % tabs.length] }}
-        </button>
-    </div>
 </div>
+
+<app-footer [tabs]="tabs"
+            [(selectedTab)]="selectedTab"></app-footer>

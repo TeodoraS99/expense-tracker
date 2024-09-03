@@ -1,12 +1,9 @@
 <div style="display: flex; flex-direction: column; height: 100%; padding: 16px;">
-
   <button mat-stroked-button
           (click)="onBtExport()"
           style=" margin-bottom: 16px; width: 200px;">
     <mat-icon>download</mat-icon> Export to Excel
   </button>
-
-
   <ag-grid-angular class="ag-theme-quartz flex-grow-1"
                    style="width: 100%; height: 500px;"
                    [columnDefs]="columnDefs"
@@ -17,6 +14,5 @@
                    [defaultExcelExportParams]="defaultExcelExportParams"
                    [grandTotalRow]="grandTotalRow"
                    (gridReady)="onGridReady($event)">
-                   
   </ag-grid-angular>
 </div>
