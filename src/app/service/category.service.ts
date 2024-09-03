@@ -13,10 +13,10 @@ export class CategoryService {
   getCategories() {
     let localStorageCategories = localStorage.getItem(this.CATEGORY_KEY);
     if (localStorageCategories) {
-      var categories = JSON.parse(localStorageCategories);
+      const categories = JSON.parse(localStorageCategories);
       return categories;
     } else {
-      return null;
+      return [];
     }
   }
 
