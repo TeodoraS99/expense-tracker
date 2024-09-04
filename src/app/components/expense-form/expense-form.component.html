@@ -47,7 +47,8 @@
               [disabled]="!expenseForm.form.valid">Save</button>
 
       <button mat-raised-button
-              type="reset">Cancel</button>
+              type="button"
+              (click)="onCancel()">Cancel</button>
     </div>
   </div>
 </form>

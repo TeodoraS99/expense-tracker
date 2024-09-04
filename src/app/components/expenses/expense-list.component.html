@@ -21,7 +21,8 @@
                           [categories]="categories"
                           [index]="i"
                           [panel]="panel"
-                          (saveExpense)="saveExpense($event)">
+                          (saveExpense)="saveExpense($event)"
+                          (cancelExpense)="cancelExpense()">
         </app-expense-form>
 
       </mat-expansion-panel>

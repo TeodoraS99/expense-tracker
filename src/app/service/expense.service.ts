@@ -30,6 +30,16 @@ export class ExpenseService {
     }
   }
 
+  getExpenseById(id: string) {
+    let expenses = this.getAllExpenses();
+    let expense = expenses.find((item: ExpenseInterface) => item.id == id);
+    if (expense) {
+      return expense;
+    } else {
+      return null;
+    }
+  }
+
   addExpense(expense: ExpenseInterface): void {
     const allExpenses = this.getAllExpenses();
     allExpenses.push(expense);

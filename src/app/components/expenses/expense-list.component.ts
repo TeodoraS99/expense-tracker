@@ -33,10 +33,15 @@ export class ExpenseListComponent implements OnInit {
 
   ngOnInit() {
     this.categories = this.categoryService.getCategories();
-    this.allExpenses = this.expenseService.getDayExpenses(this.tab);
-    this.expenses = this.allExpenses.filter((item: ExpenseInterface) => item.day == this.tab);
+    this.getExpenses();
     this.dailyTotal = this.expenseService.calculateDailyTotal(this.expenses);
   }
+
+  getExpenses() {
+    this.allExpenses = this.expenseService.getDayExpenses(this.tab);
+    this.expenses = this.allExpenses.filter((item: ExpenseInterface) => item.day == this.tab);
+  }
+
 
   addExpense() {
     const emptyExpense: ExpenseInterface = { id: '', title: '', category: '', amount: 0, day: this.tab };
@@ -61,7 +66,7 @@ export class ExpenseListComponent implements OnInit {
     }
 
     if (expense.id) {
-   
+
       this.expenseService.updateExpense(expense);
     } else {
       expense.id = uuidv4();
@@ -79,5 +84,9 @@ export class ExpenseListComponent implements OnInit {
     this.expenses = this.expenseService.getDayExpenses(this.tab);
     this.dailyTotal = this.expenseService.calculateDailyTotal(this.expenses);
     this.expenseTab.updateBudget(); //anuntam header ca s-a sters un expense
+  }
+
+  cancelExpense() {
+    this.getExpenses();
   }
 }
