@@ -6,10 +6,7 @@
     <mat-form-field appearance="fill"
                     class="form-field">
       <mat-label>Title</mat-label>
-      <input #firstInput
-             autofocus
-             id="firstInput"
-             matInput
+      <input matInput
              type="text"
              [(ngModel)]="expense.title"
              name="expenseTitle{{index}}"

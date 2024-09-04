@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ExpenseService } from '../../service/expense.service';
 import { ExpenseInterface } from '../../shared/interfaces/expense.interface';
@@ -16,8 +16,6 @@ export class ExpenseTabComponent implements OnInit {
   weeklyBudget = 0;
   remainingBudget = 0;
 
-  @ViewChild('firstInput') firstInputElement!: ElementRef;
-
   constructor(private expenseService: ExpenseService,
     private dialog: MatDialog
   ) { }
@@ -26,12 +24,6 @@ export class ExpenseTabComponent implements OnInit {
     this.weeklyBudget = this.expenseService.getWeeklyBudget();
     this.updateBudget();
     this.checkAndAddBudget();
-  }
-
-  ngAfterViewInit() {
-    if (this.firstInputElement) {
-      this.firstInputElement.nativeElement.focus();
-    }
   }
 
   checkAndAddBudget() {

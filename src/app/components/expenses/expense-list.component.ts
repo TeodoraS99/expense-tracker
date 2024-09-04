@@ -39,7 +39,7 @@ export class ExpenseListComponent implements OnInit {
   }
 
   addExpense() {
-    const emptyExpense: ExpenseInterface = { id: uuidv4(), title: '', category: '', amount: 0, day: this.tab };
+    const emptyExpense: ExpenseInterface = { id: '', title: '', category: '', amount: 0, day: this.tab };
     this.expenses.push(emptyExpense);
     setTimeout(() => {
       const lastPanel = this.panels.toArray().pop();
@@ -48,22 +48,31 @@ export class ExpenseListComponent implements OnInit {
       }
     }, 0);
     this.exportedExpenses = this.expenses;
-    this.renderer.selectRootElement('#firstInput').focus();
   }
 
-  saveExpense(event: {index: number, panel: MatExpansionPanel}) {
-    const expense = this.expenses[event.index]; 
+
+  saveExpense(event: { index: number, panel: MatExpansionPanel }) {
+    let expense = this.expenses[event.index];
+
     const currentBudget = this.expenseService.getRemainingBudget();//aflam bugetul ramas
     if (expense.amount > currentBudget) { //verific daca cheltuiala este mai mare ca bugetul
       alert('Adding this expense exceeds your remaining budget.');
       return;
     }
-    this.allExpenses.push(expense);
-    this.expenseService.addExpense(expense);
+
+    if (expense.id) {
+   
+      this.expenseService.updateExpense(expense);
+    } else {
+      expense.id = uuidv4();
+      this.expenseService.addExpense(expense);
+    }
+
     this.dailyTotal = this.expenseService.calculateDailyTotal(this.expenses);
     event.panel.close();
     this.expenseTab.updateBudget(); //anuntam header ca s-a adaugat un expense
   }
+
 
   deleteExpense(index: number) {
     this.expenseService.deleteExpense(this.expenses[index]);

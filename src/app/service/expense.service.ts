@@ -42,6 +42,16 @@ export class ExpenseService {
     localStorage.setItem(this.EXPENSE_KEY, JSON.stringify(expenses));
   }
 
+
+  updateExpense(updatedExpense: ExpenseInterface): void {
+    let expenses = this.getAllExpenses();
+    const index = expenses.findIndex((item: ExpenseInterface) => item.id === updatedExpense.id);
+    if (index !== -1) {
+      expenses[index] = updatedExpense;
+      localStorage.setItem(this.EXPENSE_KEY, JSON.stringify(expenses));
+    }
+  }
+
   getWeeklyBudget(): number {//obtin bugetul din local storage
     const budget = localStorage.getItem(this.BUDGET_KEY);
     if (budget) {
