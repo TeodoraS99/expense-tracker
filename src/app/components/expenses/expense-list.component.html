@@ -10,7 +10,7 @@
         <mat-expansion-panel-header class="panel-header">
           <mat-panel-title>{{ expense.title }}</mat-panel-title>
           <mat-panel-description class="panel-description">
-            {{ expense.amount | currency }}
+            {{ expense.amount | currency:'EUR' }}
             <mat-icon (click)="deleteExpense(i)"
                       class="deleteButton">delete</mat-icon>
           </mat-panel-description>
@@ -35,7 +35,7 @@
     </div>
 
     <div>
-      <p>Daily expenses: {{ dailyTotal | currency }}</p>
+      <p>Daily expenses: {{ dailyTotal | currency:'EUR' }}</p>
     </div>
 
     <div class="control-buttons">

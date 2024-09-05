@@ -1,7 +1,7 @@
 <div class="expense-container">
     <div style="display: flex; flex-direction: row; justify-content: space-around;">
-        <div>Weekly budget: {{ weeklyBudget| currency }}</div>
-        <div [ngStyle]="{color: remainingBudgetColor()}">Remaining budget: {{ remainingBudget | currency }}</div>
+        <div>Weekly budget: {{ weeklyBudget | currency:'EUR' }}</div>
+        <div [ngStyle]="{color: remainingBudgetColor()}">Remaining budget: {{ remainingBudget | currency:'EUR' }}</div>
     </div>
 
     <mat-tab-group class="mat-elevation-z1"
