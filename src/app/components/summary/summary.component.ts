@@ -15,6 +15,7 @@ import {
   ValueFormatterParams
 } from 'ag-grid-community';
 import 'ag-grid-enterprise';
+import { ExpenseService } from "../../service/expense.service";
 import { ExpenseInterface } from "../../shared/interfaces/expense.interface";
 
 
@@ -22,15 +23,11 @@ import { ExpenseInterface } from "../../shared/interfaces/expense.interface";
   selector: 'app-summary',
   templateUrl: './summary.component.html',
   styleUrls: ['./summary.component.css']
-  // standalone: true,
 })
 export class SummaryComponent {
-  // @Output() exportedExpenses: 
-
   @ViewChild(AgGridAngular) agGrid!: AgGridAngular;
 
   private gridApi!: GridApi<ExpenseInterface>;
-
   public columnDefs: ColDef[] = [
     { field: "day", rowGroup: true, hide: true, width: 80 },
     { field: "category", headerName: "Category", minWidth: 100, width: 120 },
@@ -59,29 +56,28 @@ export class SummaryComponent {
   public rowData!: ExpenseInterface[];
   public grandTotalRow: "top" | "bottom" = "bottom";
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient,
+    private expenseService: ExpenseService) {
     ModuleRegistry.registerModules([ClientSideRowModelModule])
+  }
+
+  ngOnInit() { }
+
+  onGridReady(params: GridReadyEvent<ExpenseInterface>) {
+    this.gridApi = params.api;
+    this.rowData = this.expenseService.getAllExpenses();
+    this.gridApi.refreshCells({ force: true });
+  }
+
+  currencyFormatter(params: ValueFormatterParams) {
+    return '€' + params.value.toFixed(2);
   }
 
   onBtExport() {
     this.gridApi.exportDataAsExcel(getParams());
   }
-
-  onGridReady(params: GridReadyEvent<ExpenseInterface>) {
-    this.gridApi = params.api;
-    this.rowData = [
-      { id: '', day: "Luni", title: "Cartofi prajiti", category: "Mancare", amount: 50 },
-      { id: '', day: "Luni", title: "Inghetata", category: "Mancare", amount: 30 },
-      { id: '', day: "Luni", title: "Prajitura", category: "Mancare", amount: 20 },
-      { id: '', day: "Luni", title: "Gaz", category: "Facturi", amount: 200 },
-      { id: '', day: "Marti", title: "Cartofi prajiti", category: "Mancare", amount: 50 },
-      { id: '', day: "Miercuri", title: "Cartofi prajiti", category: "Mancare", amount: 50 }
-    ];
-  }
-  currencyFormatter(params: ValueFormatterParams) {
-    return '€' + params.value.toFixed(2);
-  }
 }
+
 
 const getParams = (): ExcelExportParams => ({
   columnWidth: 100,
